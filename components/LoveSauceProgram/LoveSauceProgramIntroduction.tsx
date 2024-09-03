@@ -11,8 +11,8 @@ import {
 } from "@chakra-ui/react";
 import TextBlock from "../General/Shared/TextBlock";
 import Image from "next/image";
-import CupidImage from "public/static/images/LoveSauceProgram/cupid.png";
-import MrChingImage from "public/static/images/LoveSauceProgram/mr-ching.png";
+import CupidImage from "public/static/images/LoveSauceProgram/cupid.webp";
+import MrChingImage from "public/static/images/LoveSauceProgram/mr-ching.webp";
 import useLoveSauceProgram from "@/hooks/LoveSauceProgram/useLoveSauceProgram";
 import HashTankCountdownTimer, {
   formatCountdownTime,

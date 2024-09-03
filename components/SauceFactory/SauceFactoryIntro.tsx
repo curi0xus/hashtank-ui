@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Flex, VStack, Avatar } from "@chakra-ui/react";
 import TextBlock from "../General/Shared/TextBlock";
-import MrsChingImage from "public/static/images/SauceFactory/mrs-ching.png";
+import MrsChingImage from "public/static/images/SauceFactory/mrs-ching.webp";
 
 const TEXTBLOCK_1_PARAGRAPHS = [
   "Welcome to the sauce factory, where your fish can be turned into the culinary liquid gold that is fish sauce. Sauce comes in 3 grades - Standard, Premium, and Artisanal, with each escalating in difficulty to procure and sell price. Your fish's attributes will affect the sauce's quality and grade, so mix and match to your heart's content to try and vie for that primo Artisanal label.",

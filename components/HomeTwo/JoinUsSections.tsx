@@ -53,7 +53,7 @@ const JoinUsSections = ({ height, background }: any) => {
           >
             <Box h={["0", "30vw"]} w={["0", "30vw"]}>
               <Image
-                src={require("@/public/static/images/Home/Sauce-duo.png")}
+                src={require("@/public/static/images/Home/Sauce-duo.webp")}
                 alt="sauce"
               />
             </Box>
@@ -96,7 +96,7 @@ const JoinUsSections = ({ height, background }: any) => {
               >
                 <Box h={"100vw"} w={["100vw"]}>
                   <Image
-                    src={require("@/public/static/images/Home/Sauce-duo.png")}
+                    src={require("@/public/static/images/Home/Sauce-duo.webp")}
                     alt="sauce"
                   />
                 </Box>
