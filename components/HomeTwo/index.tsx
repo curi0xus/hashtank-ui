@@ -24,7 +24,7 @@ import LandingSection from "./LandingSection";
 
 const HomePageContent = () => {
   const [isMdOrLarger, setIsMdOrLarger] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const [sound, setSound] = useState<Howl | null>(null);
 
   useEffect(() => {
@@ -83,22 +83,43 @@ const HomePageContent = () => {
   return (
     <main id="home-page-main" style={{ position: "relative", zIndex: 5 }}>
       {/* Mute/Unmute Button */}
-      <button
-        onClick={toggleMute}
-        style={{
-          position: "fixed",
-          top: "45vw",
-          right: "2vw",
-          zIndex: 9999,
-          background: "transparent",
-          border: "none",
-          cursor: "pointer",
-          fontSize: "2vw",
-          color: "#888888",
-        }}
-      >
-        {isMuted ? <VscMute /> : <GoUnmute />}
-      </button>
+      {isMdOrLarger ? (
+        <button
+          onClick={toggleMute}
+          style={{
+            position: "fixed",
+            bottom: "2vw",
+            right: "2vw",
+            padding: "1vw",
+            zIndex: 9999,
+            background: "transparent",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "3vw",
+            color: "#888888",
+          }}
+        >
+          {isMuted ? <VscMute /> : <GoUnmute style={{ color: "#FFA500" }} />}
+        </button>
+      ) : (
+        <button
+          onClick={toggleMute}
+          style={{
+            position: "fixed",
+            bottom: "2vw",
+            right: "2vw",
+            padding: "1vw",
+            zIndex: 9999,
+            background: "transparent",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "8vw",
+            color: "#888888",
+          }}
+        >
+          {isMuted ? <VscMute /> : <GoUnmute style={{ color: "#FFA500" }} />}
+        </button>
+      )}
       {/* First Background Layer */}
       <div id="first-background"></div>
 
