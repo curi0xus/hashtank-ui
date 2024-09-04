@@ -22,6 +22,7 @@ async function closePreviousAuction(req: NextApiRequest, res: NextApiResponse) {
     if (allFishInAuction?.length && allFishInAuction.length > 0) {
       await Promise.all(
         allFishInAuction.map(async (fish) => {
+          //@ts-ignore
           const upperLimitOfGenePool = fish.fishtypes.total;
           const randFishIndex = Math.floor(Math.random() * upperLimitOfGenePool);
 
@@ -39,6 +40,7 @@ async function closePreviousAuction(req: NextApiRequest, res: NextApiResponse) {
 
           if (allFishBids?.length && allFishBids.length > 0) {
             const winner = allFishBids[0].user_id;
+            //@ts-ignore
             const fishTypeId = fish.fishtypes.id;
             const newFilePath = `metadata/${winner}/${fish.id}/metadata.json`;
 

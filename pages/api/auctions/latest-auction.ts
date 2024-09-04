@@ -10,6 +10,7 @@ async function triggerCloseAuctionJob(previousAuctionId: string) {
       previousAuctionId,
     });
   } catch (error) {
+    //@ts-ignore
     throw new Error(`Failed to enqueue QStash job: ${error.message}`);
   }
 }
