@@ -5980,10 +5980,10 @@ formidable@^3.5.1:
     hexoid "^1.0.0"
     once "^1.4.0"
 
-framer-motion@^11.0.3:
-  version "11.3.21"
-  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-11.3.21.tgz#bdf06cf3ced9f14ddf055e098c1566795f353466"
-  integrity sha512-D+hfIsvzV8eL/iycld4K+tKlg2Q2LdwnrcBEohtGw3cG1AIuNYATbT5RUqIM1ndsAk+EfGhoSGf0UaiFodc5Tw==
+framer-motion@^11.5.2:
+  version "11.5.2"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-11.5.2.tgz#00f6e1ba8afdf15df2a640f74983e879b80a146b"
+  integrity sha512-dZLb7F+orjs+y2ggdl3tL5wuIDsHV1p28gloOSrDWH+nwmt0RTC7myq9FdfWZcQZ47qzv4RrqHEtHoeaBK57dg==
   dependencies:
     tslib "^2.4.0"
 
