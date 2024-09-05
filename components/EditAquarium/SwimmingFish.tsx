@@ -3,16 +3,11 @@ import { Box, Image, keyframes } from "@chakra-ui/react";
 // Define keyframes for subtle wavy swimming animations
 const swimLeftToRight = keyframes`
   0% { transform: translate(100vw, 0); }
-  10% { transform: translate(90vw, 1vw); }
-  20% { transform: translate(80vw, -1vw); }
-  30% { transform: translate(70vw, 1vw); }
+  20% { transform: translate(80vw, 1vw); }
   40% { transform: translate(60vw, -1vw); }
-  50% { transform: translate(50vw, 1vw); }
-  60% { transform: translate(40vw, -1vw); }
-  70% { transform: translate(30vw, 1vw); }
+  60% { transform: translate(40vw, 1vw); }
   80% { transform: translate(20vw, -1vw); }
-  90% { transform: translate(10vw, 1vw); }
-  100% { transform: translate(-50%, 0); }
+  100% { transform: translate(0%, 0); }
 `;
 
 const swimRightToLeft = keyframes`
@@ -26,7 +21,7 @@ const swimRightToLeft = keyframes`
   70% { transform: translate(30vw, 1vw); }
   80% { transform: translate(20vw, -1vw); }
   90% { transform: translate(10vw, 1vw); }
-  100% { transform: translate(-50%, 0); }
+  100% { transform: translate(0%, 0); }
 `;
 
 // Generate random swim paths
