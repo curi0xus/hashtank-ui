@@ -2,7 +2,8 @@ import React from "react";
 import { Box, Text } from "@chakra-ui/react";
 import HashtankTooltip from "../General/Tooltip";
 import ComingSoonImage from "public/static/images/General/Tooltip/ComingSoon.webp";
-import FishAnimation from "./FIshAnimation";
+import FishAnimation from "./SwimmingFish";
+import SwimmingFish from "./SwimmingFish";
 
 const AquariumName = () => {
   return (
@@ -37,7 +38,7 @@ const AquariumName = () => {
           ></Text>
         )}
       />
-      <FishAnimation />
+      <SwimmingFish />
     </Box>
   );
 };

@@ -3,7 +3,7 @@ import AquariumName from "./AquariumName";
 import EditAquarium from "./EditAquarium";
 import TankRoster from "./TankRoster";
 import Fishery from "./Fishery";
-import FishAnimation from "./FIshAnimation";
+import FishAnimation from "./SwimmingFish";
 
 const AquariumPageContent = () => {
   return (
