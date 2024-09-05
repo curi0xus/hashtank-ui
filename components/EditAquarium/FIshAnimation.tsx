@@ -10,22 +10,18 @@ const fishData = [
   {
     id: 1,
     src: "/static/images/home/Example_Fish3.webp",
-    mirror: true,
   },
   {
     id: 2,
     src: "/static/images/home/Example_Fish3.webp",
-    mirror: true,
   },
   {
     id: 3,
     src: "/static/images/home/Example_Fish3.webp",
-    mirror: true,
   },
   {
     id: 4,
     src: "/static/images/home/Example_Fish3.webp",
-    mirror: true,
   },
 ];
 
@@ -34,12 +30,18 @@ const getRandom = (min: number, max: number) =>
   Math.random() * (max - min) + min;
 
 const FishAnimation = () => {
+  const aquariumWidth = window.innerWidth * 0.58; // 60vw
+  const aquariumHeight = window.innerHeight * 0.3; // 30vh
+  const fishSize = 10; // Fish size in vw
+
   const [fishPositions, setFishPositions] = useState(
     fishData.map(() => ({
-      x: getRandom(0, window.innerWidth * 0.58 - 100), // Aquarium width is 60vw
-      y: getRandom(0, window.innerHeight * 0.3 - 100), // Aquarium height is 20vw
-      directionX: Math.random() > 0.5 ? 1 : -1, // Random initial X direction
-      directionY: Math.random() > 0.5 ? 1 : -1, // Random initial Y direction
+      x: getRandom(-fishSize, aquariumWidth), // Fish start within the aquarium
+      y: getRandom(-fishSize, aquariumHeight),
+      directionX: 1, // Start moving to the right
+      directionY: 1, // Start moving downwards
+      outOfViewX: false, // Track if fish is out of view on X axis
+      outOfViewY: false, // Track if fish is out of view on Y axis
     }))
   );
 
@@ -49,17 +51,41 @@ const FishAnimation = () => {
       prev.map((fish, i) => {
         if (i !== index) return fish;
 
-        let { x, y, directionX, directionY } = fish;
+        let { x, y, directionX, directionY, outOfViewX, outOfViewY } = fish;
 
-        // Change direction if fish hits the aquarium boundaries
-        if (x <= 0 || x >= window.innerWidth * 0.58 - 100) directionX *= -1; // 60vw width
-        if (y <= 0 || y >= window.innerHeight * 0.3 - 100) directionY *= -1; // 20vw height
+        // Move the fish
+        const newX = x + directionX * getRandom(10, 50);
+        const newY = y + directionY * getRandom(10, 50);
+
+        // Check if fish is out of view (beyond the aquarium's boundaries)
+        const isOutOfXView = newX <= -fishSize || newX >= aquariumWidth;
+        const isOutOfYView = newY <= -fishSize || newY >= aquariumHeight;
+
+        // Only flip the direction once the fish is fully out of view
+        if (!outOfViewX && isOutOfXView) {
+          directionX *= -1; // Flip X direction when out of view
+          outOfViewX = true; // Mark X as out of view
+        }
+        if (!outOfViewY && isOutOfYView) {
+          directionY *= -1; // Flip Y direction when out of view
+          outOfViewY = true; // Mark Y as out of view
+        }
+
+        // Reset the outOfView flag once the fish re-enters the aquarium
+        if (outOfViewX && !isOutOfXView) {
+          outOfViewX = false;
+        }
+        if (outOfViewY && !isOutOfYView) {
+          outOfViewY = false;
+        }
 
         return {
-          x: x + directionX * getRandom(10, 50), // Random movement in X
-          y: y + directionY * getRandom(10, 50), // Random movement in Y
+          x: newX,
+          y: newY,
           directionX,
           directionY,
+          outOfViewX,
+          outOfViewY,
         };
       })
     );
@@ -81,7 +107,6 @@ const FishAnimation = () => {
       height="100vh"
     >
       <Box
-        // bg="#80808080"
         w="58vw"
         h="30vw"
         position="absolute" // Allows manual positioning
@@ -90,7 +115,6 @@ const FishAnimation = () => {
         overflow="hidden"
         p={4}
         id="aquarium"
-        // border="2px solid #FFFFFF" // Optional border to represent the aquarium
         borderRadius="md"
       >
         {fishPositions.map((fish, index) => (
@@ -109,7 +133,7 @@ const FishAnimation = () => {
               duration: 2,
             }}
             style={{
-              width: "10vw", // Fish image width
+              width: `${fishSize}vw`, // Fish image width
             }}
           />
         ))}
