@@ -1,91 +1,20 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createSupabaseClient } from '@/util/supabase/server';
+import { enqueueBackgroundJob } from '@/util/qstash';
 
 const supabase = createSupabaseClient();
 
-export function generateRandomString(length: number) {
-  let result = '';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  const charactersLength = characters.length;
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * charactersLength);
-    result += characters.charAt(randomIndex);
-  }
-  return result;
-}
-
-async function closePreviousAuction(previousAuctionId: string) {
-  console.log('CLOSING AUCTION', previousAuctionId);
-  const { data: allFishInAuction, error: allFishInAuctionError } =
-    await supabase
-      .from('fish')
-      .select('id, fishtype_id, fishtypes(id, total)')
-      .eq('auction_id', previousAuctionId);
-
-  if (allFishInAuctionError) {
-    console.error('Error fetching fish in auction', allFishInAuctionError);
-    throw allFishInAuctionError;
-  }
-
-  if (allFishInAuction?.length && allFishInAuction.length > 0) {
-    for (let i = 0; i < allFishInAuction.length; i++) {
-      // @ts-ignore
-      const upperLimitOfGenePool = allFishInAuction[i].fishtypes.total;
-      const randFishIndex = Math.floor(Math.random() * upperLimitOfGenePool);
-      const { data: allFishBids, error: allFishBidsError } = await supabase
-        .from('bids')
-        .select('user_id, bid_amount')
-        .eq('fish_id', allFishInAuction[i].id)
-        .eq('auction_id', previousAuctionId)
-        .order('bid_amount', { ascending: false });
-
-      if (allFishBidsError) {
-        console.error(
-          `Error fetching all fish(${allFishInAuction[i].id}) bids  in auction`,
-          allFishBidsError
-        );
-        throw allFishBidsError;
-      }
-
-      console.log('ALL FISH BIDS:', allFishBids);
-      if (allFishBids?.length && allFishBids.length > 0) {
-        const winner = allFishBids[0].user_id;
-        // @ts-ignore
-        const fishTypeId = allFishInAuction[i].fishtypes.id;
-        const newFilePath = `metadata/${winner}/${allFishInAuction[i].id}/metadata.json`;
-
-        const { data: copiedData, error: copyDataError } =
-          await supabase.storage
-            .from('gene_pool')
-            .copy(`${fishTypeId}/${randFishIndex}/metadata.json`, newFilePath);
-
-        if (copyDataError) {
-          if (copyDataError.message != 'The resource already exists') {
-            console.error(`Error copying metadata`, copyDataError);
-            throw copyDataError;
-          }
-        }
-
-        const { data, error: updateFishError } = await supabase
-          .from('fish')
-          .update({
-            state: 'revealed',
-            owner_address: winner,
-            winning_bid: allFishBids[0].bid_amount,
-            metadata_url: `${process.env.NEXT_PUBLIC_SUPABASE_BASE_URL}${newFilePath}`,
-          })
-          .eq('id', allFishInAuction[i].id);
-
-        console.log('FISH AWARED TO:', winner, newFilePath);
-
-        if (updateFishError) {
-          console.error(`Error updating fish`, updateFishError);
-          throw updateFishError;
-        }
-      }
-    }
+async function triggerCloseAuctionJob(previousAuctionId: string) {
+  try {
+    await enqueueBackgroundJob(`${process.env.NEXT_PUBLIC_API_URL}/api/auctions/close-previous-auction`, {
+      previousAuctionId,
+    });
+  } catch (error) {
+    //@ts-ignore
+    throw new Error(`Failed to enqueue QStash job: ${error.message}`);
   }
 }
+
 
 async function createNewAuction(batchNumber: number) {
   const NEW_AUCTION_NAME = 'New Auction';
@@ -169,8 +98,19 @@ async function createNewAuction(batchNumber: number) {
   }
 }
 
+export function generateRandomString(length: number) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const charactersLength = characters.length;
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * charactersLength);
+    result += characters.charAt(randomIndex);
+  }
+  return result;
+}
+
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  let newAuctionId: null = null;
+  let newAuctionId: string | null = null;
 
   if (req.method === 'GET') {
     try {
@@ -203,20 +143,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const now = new Date();
       const lastAuctionEndTime = new Date(latestAuction.end_time);
 
-      if (now > lastAuctionEndTime) {
-        await closePreviousAuction(latestAuction.id);
-        // Update the state of the previous auction to 'closed'
-        const { error: updateError } = await supabase
-          .from('auctions')
-          .update({ state: 'closed' })
-          .eq('id', latestAuction.id);
-
-        if (updateError) {
-          return res.status(500).json({
-            error: `Error updating previous auction state: ${updateError.message}`,
-          });
-        }
-
+      // Check if the last auction is already closed
+      if (latestAuction.state === 'closed') {
+        console.log('Latest auction is already closed, creating a new one.');
         try {
           newAuctionId = await createNewAuction(latestAuction.batch_number + 1);
         } catch (error: any) {
@@ -224,11 +153,45 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
             error: `Error creating new auction: ${error.message}`,
           });
         }
+      } else if (now > lastAuctionEndTime) {
+        console.log('Auction has ended, closing the previous auction.');
+        
+        // Update the state of the previous auction to 'closed'
+        const { error: updateError } = await supabase
+          .from('auctions')
+          .update({ state: 'closed' })
+          .eq('id', latestAuction.id);
+
+        try {
+          await triggerCloseAuctionJob(latestAuction.id);
+          const { error: updateError } = await supabase
+            .from('auctions')
+            .update({ state: 'closed' })
+            .eq('id', latestAuction.id);
+
+          if (updateError) {
+            return res.status(500).json({
+              error: `Error updating previous auction state: ${updateError.message}`,
+            });
+          } else {
+            console.log('Previous auction closed successfully.');
+          }
+
+          try {
+            newAuctionId = await createNewAuction(latestAuction.batch_number + 1);
+          } catch (error: any) {
+            return res.status(500).json({
+              error: `Error creating new auction: ${error.message}`,
+            });
+          }
+        } catch (error: any) {
+          return res.status(500).json({
+            error: `Error triggering close auction job: ${error.message}`,
+          });
+        }
       }
 
-      return res
-        .status(200)
-        .json({ auction_id: newAuctionId || latestAuction.id });
+      return res.status(200).json({ auction_id: newAuctionId || latestAuction.id });
     } catch (error) {
       console.error('Error processing request:', error);
       return res.status(500).json({ error: 'Internal Server Error' });
