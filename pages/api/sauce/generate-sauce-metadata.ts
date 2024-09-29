@@ -113,7 +113,7 @@ async function generateSauceMetadataUrlJob(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { saucingFee, mintPrice, fishIDs, fishContent, bottleId } = req.body;
+  const { saucingFee, mintPrice, fishIDs, fishContent, bottleId, fishDeets } = req.body;
   try {
     console.log('Background job started', fishContent);
     const metas = await getFishSauceMetaData(fishContent);
@@ -165,6 +165,7 @@ async function generateSauceMetadataUrlJob(
       bottleId
     );
 
+    // console.log("the bottle id is " +bottleId+ " ");
     const metadataFileLocation = `${
       process.env.NEXT_PUBLIC_SUPABASE_SAUCE_URL
     }redemptions/${bottleId}.json?t=${new Date()}`;
@@ -185,6 +186,7 @@ async function generateSauceMetadataUrlJob(
         const buyBackPrice =
           sauceAwarded.name === 'Gunk' ? 0 : (mintPrice * 1.2).toFixed(2);
 
+          // console.log("fishDeets[0].owner_address", fishDeets)
         const { data: createSauce, error: createSauceError } = await supabase
           .from('sauces')
           .insert({
@@ -192,7 +194,7 @@ async function generateSauceMetadataUrlJob(
             serial_number: generateRandomString(2) + '-01',
             buyback_price: buyBackPrice,
             metadata_url: metadataFileLocation,
-            owner_address: djson.owner_address,
+            owner_address: fishDeets[0].owner_address,
             grade: sauceAwarded.name.toUpperCase(),
           });
 
@@ -205,6 +207,7 @@ async function generateSauceMetadataUrlJob(
             fishIDs.map((id: string) => ({
               id,
               sauce_id: bottleId,
+              serial_number: generateRandomString(2) + '-01'
             }))
           );
 
@@ -229,7 +232,7 @@ async function generateSauceMetadataUrlJob(
           await supabase
             .from('users')
             .select('balance')
-            .eq('wallet_address', djson.owner_address)
+            .eq('wallet_address', fishDeets[0].owner_address)
             .limit(1)
             .single();
 
@@ -243,7 +246,7 @@ async function generateSauceMetadataUrlJob(
           const { error: updateBalanceError } = await supabase
             .from('users')
             .update({ balance: userBalanceData.balance - saucingFee })
-            .eq('wallet_address', djson.owner_address);
+            .eq('wallet_address', fishDeets[0].owner_address);
 
           if (updateBalanceError) {
             throw new Error(

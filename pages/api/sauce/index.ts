@@ -22,7 +22,8 @@ async function generateSauceMetadataUrlJob(
   mintPrice: number,
   fishIDs: string[],
   fishContent: string[],
-  bottleId: string
+  bottleId: string,
+  fishDeets: string[],
 ) {
   console.timeLog();
   try {
@@ -34,6 +35,7 @@ async function generateSauceMetadataUrlJob(
         fishIDs,
         fishContent,
         bottleId,
+        fishDeets
       }
     );
   } catch (error) {
@@ -86,7 +88,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         totalMintPrice,
         fishIds,
         fishContent,
-        bottleID
+        bottleID,
+        fishDeets
       );
 
       return res.status(200).json({ success: true });
