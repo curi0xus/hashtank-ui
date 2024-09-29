@@ -5,16 +5,24 @@ import { enqueueBackgroundJob } from '@/util/qstash';
 const supabase = createSupabaseClient();
 
 async function triggerCloseAuctionJob(previousAuctionId: string) {
+  console.log('triggering close auction job', previousAuctionId);
   try {
-    await enqueueBackgroundJob(`${process.env.NEXT_PUBLIC_API_URL}/api/auctions/close-previous-auction`, {
-      previousAuctionId,
-    });
+    console.log(
+      'RESPONSE',
+      `${process.env.NEXT_PUBLIC_API_URL}/api/auctions/close-previous-auction`
+    );
+    const res = await enqueueBackgroundJob(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/auctions/close-previous-auction`,
+      {
+        previousAuctionId,
+      }
+    );
   } catch (error) {
+    console.log('ERROR', error);
     //@ts-ignore
     throw new Error(`Failed to enqueue QStash job: ${error.message}`);
   }
 }
-
 
 async function createNewAuction(batchNumber: number) {
   const NEW_AUCTION_NAME = 'New Auction';
@@ -155,7 +163,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
       } else if (now > lastAuctionEndTime) {
         console.log('Auction has ended, closing the previous auction.');
-        
+
         // Update the state of the previous auction to 'closed'
         const { error: updateError } = await supabase
           .from('auctions')
@@ -178,7 +186,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           }
 
           try {
-            newAuctionId = await createNewAuction(latestAuction.batch_number + 1);
+            newAuctionId = await createNewAuction(
+              latestAuction.batch_number + 1
+            );
           } catch (error: any) {
             return res.status(500).json({
               error: `Error creating new auction: ${error.message}`,
@@ -191,7 +201,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         }
       }
 
-      return res.status(200).json({ auction_id: newAuctionId || latestAuction.id });
+      return res
+        .status(200)
+        .json({ auction_id: newAuctionId || latestAuction.id });
     } catch (error) {
       console.error('Error processing request:', error);
       return res.status(500).json({ error: 'Internal Server Error' });
