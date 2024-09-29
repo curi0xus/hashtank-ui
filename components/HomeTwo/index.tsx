@@ -24,7 +24,7 @@ import LandingSection from "./LandingSection";
 
 const HomePageContent = () => {
   const [isMdOrLarger, setIsMdOrLarger] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
   const [sound, setSound] = useState<Howl | null>(null);
 
   useEffect(() => {
@@ -65,7 +65,6 @@ const HomePageContent = () => {
   }, []);
 
   const toggleMute = () => {
-    console.log("first");
     if (sound) {
       if (isMuted) {
         sound.mute(false);
