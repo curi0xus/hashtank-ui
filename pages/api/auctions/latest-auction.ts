@@ -25,8 +25,9 @@ async function triggerCloseAuctionJob(previousAuctionId: string) {
 }
 
 async function createNewAuction(batchNumber: number) {
-  const NEW_AUCTION_NAME = 'New Auction';
-  const NEW_AUCTION_DESCRIPTION = 'This is a new auction';
+  const NEW_AUCTION_NAME = 'Aquatic Versicolor';
+  const NEW_AUCTION_DESCRIPTION =
+    "Amidst the slow but steady collapse of oceanic currents and marine life in the year 2048, each of our harvests yielded increasingly strange specimens. Organisms previously lacking vibrant pigmentation developed almost neon-like features, while those already boasting such beauty evolved even more peculiar properties, reminiscent of a cephalopod's mimicry. For our first public auction, we present some of the most colorful creatures ever to emerge from a dying world. They say the last dance is often the most passionate and enduring – will you be the patron of this final act?";
   const AUCTION_START_PRICE = '1.00';
   const BATCH_PREFIX = generateRandomString(2);
   // Create a new auction with the same details
