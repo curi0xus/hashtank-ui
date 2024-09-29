@@ -23,7 +23,7 @@ async function generateSauceMetadataUrlJob(
   fishIDs: string[],
   fishContent: string[],
   bottleId: string,
-  fishDeets: string[],
+  fishDeets: string[]
 ) {
   console.timeLog();
   try {
@@ -35,7 +35,7 @@ async function generateSauceMetadataUrlJob(
         fishIDs,
         fishContent,
         bottleId,
-        fishDeets
+        fishDeets,
       }
     );
   } catch (error) {

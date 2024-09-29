@@ -8,5 +8,6 @@ export async function enqueueBackgroundJob(endpoint: string, body: any) {
   return qstash.publishJSON({
     url: endpoint,
     body,
+    timeout: '1m',
   });
 }

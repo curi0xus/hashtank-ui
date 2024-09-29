@@ -19,7 +19,6 @@ const VanityShelf = () => {
 
   const gunkSauceList =
     ownedFishSAuce?.filter((sauce: any) => sauce.grade == 'GUNK') || [];
-  console.log('GUNK SAUCE LIST', gunkSauceList);
   return (
     <Box
       mt={['0vh', '0vh', '', '', '0']}
@@ -46,7 +45,7 @@ const VanityShelf = () => {
                   />
                 ))
             ) : (
-              <h1>Loading...</h1>
+              <></>
             )}
             {gunkSauceList.length ? (
               <RedeemSauceFishCard
@@ -59,7 +58,7 @@ const VanityShelf = () => {
                 metdataUrl={gunkSauceList[0].metadata_url}
               />
             ) : (
-              <h1>Loading...</h1>
+              <></>
             )}
             {ownedFishSAuce?.length === 0 && (
               <p>

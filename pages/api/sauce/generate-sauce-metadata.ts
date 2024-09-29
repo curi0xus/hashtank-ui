@@ -113,7 +113,8 @@ async function generateSauceMetadataUrlJob(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { saucingFee, mintPrice, fishIDs, fishContent, bottleId, fishDeets } = req.body;
+  const { saucingFee, mintPrice, fishIDs, fishContent, bottleId, fishDeets } =
+    req.body;
   try {
     console.log('Background job started', fishContent);
     const metas = await getFishSauceMetaData(fishContent);
@@ -186,7 +187,6 @@ async function generateSauceMetadataUrlJob(
         const buyBackPrice =
           sauceAwarded.name === 'Gunk' ? 0 : (mintPrice * 1.2).toFixed(2);
 
-          // console.log("fishDeets[0].owner_address", fishDeets)
         const { data: createSauce, error: createSauceError } = await supabase
           .from('sauces')
           .insert({
@@ -207,7 +207,7 @@ async function generateSauceMetadataUrlJob(
             fishIDs.map((id: string) => ({
               id,
               sauce_id: bottleId,
-              serial_number: generateRandomString(2) + '-01'
+              serial_number: generateRandomString(2) + '-01',
             }))
           );
 
