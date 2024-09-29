@@ -1,5 +1,5 @@
-import React from "react";
-import SectionLayout from "./Shared/SectionLayout";
+import React from 'react';
+import SectionLayout from './Shared/SectionLayout';
 import {
   Stack,
   Flex,
@@ -9,12 +9,12 @@ import {
   Divider,
   ButtonGroup,
   IconButton,
-} from "@chakra-ui/react";
-import SectionContent from "./Shared/SectionContent";
-import SocialTelegram from "../General/Icons/Telegram";
-import SocialWarpcaster from "../General/Icons/Warpcast";
-import TwitterX from "../General/Icons/TwitterX";
-import Image from "next/image";
+} from '@chakra-ui/react';
+import SectionContent from './Shared/SectionContent';
+import SocialTelegram from '../General/Icons/Telegram';
+import SocialWarpcaster from '../General/Icons/Warpcast';
+import TwitterX from '../General/Icons/TwitterX';
+import Image from 'next/image';
 
 const JoinUsSections = ({ height, background }: any) => {
   return (
@@ -22,17 +22,17 @@ const JoinUsSections = ({ height, background }: any) => {
       <>
         {/* <Flex height={['fit-content', '100vh', '100vh']}> */}
         <Flex
-          marginTop={["0vw", "4vw"]}
-          id="background-info"
+          marginTop={['0vw', '4vw']}
+          id='background-info'
           // __css={{
           //   scrollbarWidth: 0,
           // }}
-          overflowX="hidden"
+          overflowX='hidden'
           scrollPadding={0}
-          overflowY="scroll"
-          height="100%"
-          justify={["center"]}
-          alignItems={"flex-start"}
+          overflowY='scroll'
+          height='100%'
+          justify={['center']}
+          alignItems={'flex-start'}
 
           // height={[
           //   '405vmin',
@@ -44,141 +44,142 @@ const JoinUsSections = ({ height, background }: any) => {
           // ]}
         >
           <Box
-            h="100%"
-            w={["0", "38.5vw"]}
-            display={["none", "flex"]}
-            justifyItems={["center", "end"]}
-            alignItems={["center", "start"]}
-            p={["0 0 0 0", "5vw 0 0 5vw"]}
+            h='100%'
+            w={['0', '38.5vw']}
+            display={['none', 'flex']}
+            justifyItems={['center', 'end']}
+            alignItems={['center', 'start']}
+            p={['0 0 0 0', '5vw 0 0 5vw']}
           >
-            <Box h={["0", "30vw"]} w={["0", "30vw"]}>
+            <Box h={['0', '30vw']} w={['0', '30vw']}>
               <Image
-                src={require("@/public/static/images/Home/Sauce-duo.webp")}
-                alt="sauce"
+                src={require('@/public/static/images/Home/Sauce-duo.webp')}
+                alt='sauce'
               />
             </Box>
           </Box>
           <Stack
-            height="100%"
-            justifyContent={"flex-start"}
-            alignItems={"flex-start"}
+            height='100%'
+            justifyContent={'flex-start'}
+            alignItems={'flex-start'}
             p={[
               // "140vmin 0 0 0",
-              "1vw 0",
+              '1vw 0',
               // '5vh 0 0 0',
               // '6vh 0 0 0',
               // '5vh 0 0 0',
               // '10vmin 0 0 0',
               // '15vw 0 0 0',
             ]}
-            width={["85%", "44%"]}
+            width={['85%', '44%']}
           >
             <Stack
-              justifyContent={"start"}
-              alignItems={["flex-start"]}
-              height="100%"
+              justifyContent={'start'}
+              alignItems={['flex-start']}
+              height='100%'
             >
               <SectionContent
-                title="JOIN THE FISH SAUCE EMPIRE"
+                title='JOIN THE FISH SAUCE EMPIRE'
                 content={[
-                  "Hashtank is a layered narrative that goes deeper than just artwork and merchandise, with a universe slowly unfolding through the participation of the community using the special mechanisms afforded to us with NFTs.",
-                  "Sounds fishy? Don’t worry, Mrs. Ching got this.",
-                  "Follow us on these platforms and stay afloat of news.",
+                  'Hashtank is a layered narrative that goes deeper than just artwork and merchandise, with a universe slowly unfolding through the participation of the community using the special mechanisms afforded to us with NFTs.',
+                  'Sounds fishy? Don’t worry, Mrs. Ching got this.',
+                  'Follow us on these platforms and stay afloat of news.',
                 ]}
               />
               <Box
-                h="120vw"
-                w="85vw"
-                display={["flex", "none"]}
-                justifyItems={["center", "end"]}
-                alignItems={["center", "start"]}
+                h='120vw'
+                w='85vw'
+                display={['flex', 'none']}
+                justifyItems={['center', 'end']}
+                alignItems={['center', 'start']}
                 // p={["0 0 0 0", "5vw 0 0 5vw"]}
               >
-                <Box h={"100vw"} w={["100vw"]}>
+                <Box h={'100vw'} w={['100vw']}>
                   <Image
-                    src={require("@/public/static/images/Home/Sauce-duo.webp")}
-                    alt="sauce"
+                    src={require('@/public/static/images/Home/Sauce-duo.webp')}
+                    alt='sauce'
                   />
                 </Box>
               </Box>
               <ButtonGroup
-                spacing={["6.3vw", "0vw"]}
-                mt={["2vw !important"]}
-                display="flex"
-                marginInline={["auto", "0"]}
-                marginBottom={["8vw", "1vw"]}
+                spacing={['6.3vw', '0vw']}
+                mt={['2vw !important']}
+                display='flex'
+                marginInline={['auto', '0']}
+                marginBottom={['8vw', '1vw']}
                 // css={{ marginTop: '72px !important' }}
               >
                 <Box>
                   <IconButton
-                    fontSize={["14vw", "3.5vw"]}
+                    fontSize={['14vw', '3.5vw']}
                     _hover={{
-                      background: "none",
-                      color: "white",
+                      background: 'none',
+                      color: 'white',
                     }}
-                    color="brand.900"
-                    background="none"
-                    aria-label="Telegram"
+                    color='brand.900'
+                    background='none'
+                    aria-label='Telegram'
                     icon={<SocialTelegram />}
                   />
                 </Box>
                 <Box>
                   <IconButton
-                    fontSize={["14vw", "3.5vw"]}
+                    fontSize={['14vw', '3.5vw']}
                     _hover={{
-                      background: "none",
-                      color: "white",
+                      background: 'none',
+                      color: 'white',
                     }}
-                    color="brand.900"
-                    background="none"
-                    aria-label="Wrapcaster"
+                    color='brand.900'
+                    background='none'
+                    aria-label='Wrapcaster'
                     icon={<SocialWarpcaster />}
                   />
                 </Box>
                 <Box>
                   <IconButton
-                    fontSize={["14vw", "3.5vw"]}
+                    fontSize={['14vw', '3.5vw']}
                     _hover={{
-                      background: "none",
-                      color: "white",
+                      background: 'none',
+                      color: 'white',
                     }}
-                    color="brand.900"
-                    background="none"
-                    aria-label="Twitter"
+                    color='brand.900'
+                    background='none'
+                    aria-label='Twitter'
                     icon={<TwitterX />}
                   />
                 </Box>
               </ButtonGroup>
               <SectionContent
                 content={[
-                  "HASHTANK is currently in a closed alpha, but you can apply to join our open beta below.",
+                  'Start your Hashtank journey with a 100 ⌘SHELL free of charge.',
                 ]}
               />
               <Box
-                w={["100%", "75% !important"]}
-                display={"flex"}
-                ml={["8vw", "0"]}
-                mt={["11vw", "3vw"]}
+                w={['100%', '75% !important']}
+                display={'flex'}
+                ml={['8vw', '0']}
+                mt={['11vw', '3vw']}
               >
                 <Button
-                  maxW={["70vw", "24vw"]}
-                  w={["fit-content"]}
+                  onClick={() => (window.location.href = '/claim')}
+                  maxW={['70vw', '24vw']}
+                  w={['fit-content']}
                   paddingInlineEnd={0}
                   paddingInlineStart={0}
-                  p={["6.5vw 10vw", "2vw 3vw"]}
+                  p={['6.5vw 10vw', '2vw 3vw']}
                   _hover={{
-                    background: "white",
-                    color: "brand.900",
+                    background: 'white',
+                    color: 'brand.900',
                   }}
-                  background={"brand.900"}
-                  color="white"
+                  background={'brand.900'}
+                  color='white'
                 >
                   <Text
-                    textTransform={"uppercase"}
-                    fontWeight={"medium"}
-                    fontSize={["4vw", "1.4vw"]}
+                    textTransform={'uppercase'}
+                    fontWeight={'medium'}
+                    fontSize={['4vw', '1.4vw']}
                   >
-                    join our beta waitlist
+                    CLAIM FREE SHELL
                   </Text>
                 </Button>
               </Box>
