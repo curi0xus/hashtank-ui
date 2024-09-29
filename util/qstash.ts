@@ -5,7 +5,7 @@ const qstash = new Client({
 });
 
 export async function enqueueBackgroundJob(endpoint: string, body: any) {
-  return await qstash.publishJSON({
+  return qstash.publishJSON({
     url: endpoint,
     body,
   });

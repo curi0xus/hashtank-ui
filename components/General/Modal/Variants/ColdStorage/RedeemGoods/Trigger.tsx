@@ -17,7 +17,7 @@ import HTModal from "@/components/General/Modal";
 import CallToAction from "./CallToAction";
 import Content from "./Content";
 import CloseIcon from "@/components/General/Icons/CloseIcon";
-import TshirtThumbnail from "public/static/images/ColdStorage/TshirtThumbnail.png";
+import TshirtThumbnail from "public/static/images/ColdStorage/TshirtThumbnail.webp";
 
 const Trigger = ({
   specialColor,

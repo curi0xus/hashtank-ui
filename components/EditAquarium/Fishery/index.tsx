@@ -1,15 +1,15 @@
-import React from 'react';
-import { Box } from '@chakra-ui/react';
-import EelImage from 'public/static/images/Aquarium/Fishery/Eel.png';
-import BreedingEelImage from 'public/static/images/Aquarium/Fishery/BreedingEel.png';
-import MutatedEelImage from 'public/static/images/Aquarium/Fishery/MutatedEel.png';
-import FilterLayout from '@/components/General/Filter';
-import FishCard from '@/components/General/Modal/Variants/FishCard';
-import InBreedingProgramFish from '@/components/General/Modal/Variants/ProgramEngagement/InBreedingProgram';
-import useGetOwnersFish from '@/hooks/useGetOwnersFish';
-import useSelectedFishIdsToTank from '@/hooks/EditAquarium/useSelectedFishIdsToTank';
-import Link from 'next/link';
-import useGetTokenMetas from '@/hooks/admin/loveSauceProgram/useGetTokenMetas';
+import React from "react";
+import { Box } from "@chakra-ui/react";
+import EelImage from "public/static/images/Aquarium/Fishery/Eel.webp";
+import BreedingEelImage from "public/static/images/Aquarium/Fishery/BreedingEel.webp";
+import MutatedEelImage from "public/static/images/Aquarium/Fishery/MutatedEel.webp";
+import FilterLayout from "@/components/General/Filter";
+import FishCard from "@/components/General/Modal/Variants/FishCard";
+import InBreedingProgramFish from "@/components/General/Modal/Variants/ProgramEngagement/InBreedingProgram";
+import useGetOwnersFish from "@/hooks/useGetOwnersFish";
+import useSelectedFishIdsToTank from "@/hooks/EditAquarium/useSelectedFishIdsToTank";
+import Link from "next/link";
+import useGetTokenMetas from "@/hooks/admin/loveSauceProgram/useGetTokenMetas";
 
 const items = [
   { id: 1, img: MutatedEelImage, isBroodFish: true },
@@ -20,12 +20,12 @@ const items = [
   { id: 4, img: EelImage },
 ];
 
-const SORT_FILTERS = [['name', 'name 2', 'name 3']];
+const SORT_FILTERS = [["name", "name 2", "name 3"]];
 
 const FILTER_OPTIONS = [
-  ['mutation', 'mutation 2', 'mutation 3'],
-  ['umami', 'umami 2', 'umami 3'],
-  ['fertility', 'fertility 2', 'fertility 3'],
+  ["mutation", "mutation 2", "mutation 3"],
+  ["umami", "umami 2", "umami 3"],
+  ["fertility", "fertility 2", "fertility 3"],
 ];
 
 const Fishery = () => {
@@ -41,13 +41,13 @@ const Fishery = () => {
   );
   return (
     <Box
-      mt={['0vh', '10vh', '', '', '0']}
+      mt={["0vh", "10vh", "", "", "0"]}
       // gap='0'
       // flexWrap={'wrap'}
-      p={['0 7vw 0 7vw', '10vh 16vw 0vh 16vw']}
+      p={["0 7vw 0 7vw", "10vh 16vw 0vh 16vw"]}
     >
       <FilterLayout
-        title='fishery'
+        title="fishery"
         sortFilters={SORT_FILTERS}
         filters={FILTER_OPTIONS}
         items={() => (
@@ -62,7 +62,7 @@ const Fishery = () => {
             {unselectedFish.map((each: string) => (
               <FishCard
                 metadata={tokenMetasMap[each]}
-                type='tank'
+                type="tank"
                 key={each}
                 nftId={each}
               />
@@ -70,10 +70,10 @@ const Fishery = () => {
 
             {!unselectedFish.length && (
               <p>
-                There are no fish in the fishery.{' '}
+                There are no fish in the fishery.{" "}
                 <Link
-                  style={{ color: '#FF530D', textDecoration: 'underline' }}
-                  href='/auction'
+                  style={{ color: "#FF530D", textDecoration: "underline" }}
+                  href="/auction"
                 >
                   Get your fish now!
                 </Link>

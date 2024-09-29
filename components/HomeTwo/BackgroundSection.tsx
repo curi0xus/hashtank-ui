@@ -16,11 +16,11 @@ import dynamic from "next/dynamic";
 const PlentyOfFish = dynamic(() => import("../PlentyOfFish"), { ssr: false });
 const SauceModal = dynamic(() => import("../SauceModal"), { ssr: false });
 import Image from "next/image";
-import eyefish from "@/public/static/images/Home/eye_fish.png";
+import eyefish from "@/public/static/images/Home/eye_fish.webp";
 import FishSlider from "../General/Home/FishSlider";
 import SectionContentException from "./Shared/SectionContentException";
 import { Parallax } from "react-parallax";
-import tentacle from "@/public/static/images/Home/Tentacle.png";
+import tentacle from "@/public/static/images/Home/Tentacle.webp";
 
 const BackgroundSection = ({ height, background }: any) => {
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Card,
   CardBody,
@@ -11,10 +11,10 @@ import {
   Button,
   IconButton,
   useMediaQuery,
-} from '@chakra-ui/react';
-import Image from 'next/image';
-import EmptySauceThumbnail from 'public/static/images/ColdStorage/EmptySauceThumbnail.png';
-import CloseIcon from '@/components/General/Icons/CloseIcon';
+} from "@chakra-ui/react";
+import Image from "next/image";
+import EmptySauceThumbnail from "public/static/images/ColdStorage/EmptySauceThumbnail.webp";
+import CloseIcon from "@/components/General/Icons/CloseIcon";
 
 const Trigger = ({
   specialColor,
@@ -38,47 +38,47 @@ const Trigger = ({
   description,
   ...props
 }: any) => {
-  const [isNotMobile] = useMediaQuery('(min-width: 480px)', {
+  const [isNotMobile] = useMediaQuery("(min-width: 480px)", {
     ssr: true,
     fallback: false,
   });
   return (
     <Card
-      cursor={'pointer'}
+      cursor={"pointer"}
       onClick={onClick}
       {...props}
-      h='fit-content'
-      m='25px 0'
-      w={['45%', '45%', '30%', '30%', '22%']}
-      color='white'
-      background='none'
-      shadow={'none'}
-      maxW='sm'
+      h="fit-content"
+      m="25px 0"
+      w={["45%", "45%", "30%", "30%", "22%"]}
+      color="white"
+      background="none"
+      shadow={"none"}
+      maxW="sm"
     >
-      <CardBody p={0} flex='none'>
+      <CardBody p={0} flex="none">
         <Box
-          position='relative'
-          height='100%'
-          borderRadius={'20px'}
-          background={'#9A9FB0'}
+          position="relative"
+          height="100%"
+          borderRadius={"20px"}
+          background={"#9A9FB0"}
         >
           {isSelected && (
             <IconButton
               _hover={{
-                background: 'none',
-                color: 'brand.800',
+                background: "none",
+                color: "brand.800",
               }}
               onClick={(e: any) => {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log('deselect');
+                console.log("deselect");
               }}
               top={[1, 3]}
               right={[1, 3]}
-              position='absolute'
-              color='brand.800'
-              background='none'
-              aria-label='Back Arrow'
+              position="absolute"
+              color="brand.800"
+              background="none"
+              aria-label="Back Arrow"
               icon={<CloseIcon fontSize={[18, 25]} />}
             />
           )}
@@ -106,67 +106,67 @@ const Trigger = ({
             </Text>
           )} */}
 
-          <Box padding='10%'>
+          <Box padding="10%">
             <Image
               width={100}
               height={100}
               style={{
-                margin: 'auto',
-                width: '100%',
-                height: 'auto%',
+                margin: "auto",
+                width: "100%",
+                height: "auto%",
               }}
               src={image}
-              alt='Green double couch with wooden legs'
+              alt="Green double couch with wooden legs"
             />
           </Box>
         </Box>
 
-        <Stack mt='6' spacing='0'>
+        <Stack mt="6" spacing="0">
           <Text
-            textTransform={'uppercase'}
-            color='brand.900'
-            fontWeight={'normal'}
-            fontSize={['xs', 'sm']}
+            textTransform={"uppercase"}
+            color="brand.900"
+            fontWeight={"normal"}
+            fontSize={["xs", "sm"]}
           >
             {dropType}
           </Text>
           <Text
-            maxW={['100%', '100%', '100%', '100%', '80%']}
-            mb='5px'
-            color='brand.900'
-            mt={['0px !important', '0px !important']}
-            textTransform={'uppercase'}
-            fontWeight={'normal'}
-            fontSize={['sm', 'xl']}
+            maxW={["100%", "100%", "100%", "100%", "80%"]}
+            mb="5px"
+            color="brand.900"
+            mt={["0px !important", "0px !important"]}
+            textTransform={"uppercase"}
+            fontWeight={"normal"}
+            fontSize={["sm", "xl"]}
           >
             {name}
           </Text>
-          <Divider opacity={1} borderBottomWidth={2} borderColor={'white'} />
+          <Divider opacity={1} borderBottomWidth={2} borderColor={"white"} />
           <Flex
-            m={['10px 0 15px 0']}
-            flexDirection={['column', 'row']}
-            justifyContent='space-between'
+            m={["10px 0 15px 0"]}
+            flexDirection={["column", "row"]}
+            justifyContent="space-between"
           >
             {isNotMobile && (
               <Text
                 {...props}
-                cursor={'pointer'}
-                decoration={'underline'}
-                fontWeight={'normal'}
-                fontSize={['sm', 'md']}
+                cursor={"pointer"}
+                decoration={"underline"}
+                fontWeight={"normal"}
+                fontSize={["sm", "md"]}
               >
-                details {'>'}
+                details {">"}
               </Text>
             )}
             <Text
-              textAlign={['right', 'left']}
-              fontWeight={'normal'}
-              fontSize={['sm', 'md']}
+              textAlign={["right", "left"]}
+              fontWeight={"normal"}
+              fontSize={["sm", "md"]}
             >
               N/A
             </Text>
           </Flex>
-          <Divider opacity={1} borderBottomWidth={2} borderColor={'white'} />
+          <Divider opacity={1} borderBottomWidth={2} borderColor={"white"} />
         </Stack>
       </CardBody>
     </Card>

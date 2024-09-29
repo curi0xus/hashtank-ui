@@ -3,7 +3,7 @@ import { Box, Flex, VStack, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import ModalTitle from "@/components/General/Modal/CardModal/Title";
 import BidSummary from "@/components/General/Modal/CardModal/BidSummary";
-import BlueTee from "public/static/images/ColdStorage/BlueTee.png";
+import BlueTee from "public/static/images/ColdStorage/BlueTee.webp";
 import useScreenOritentation from "@/hooks/useScreenOritentation";
 import mobileCheck from "@/helpers/mobileCheck";
 

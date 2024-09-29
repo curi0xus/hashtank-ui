@@ -17,17 +17,25 @@ export const UNIQUENESS_MAP = [
   [0, 0, 0, 0, 0.2],
 ];
 
-
-
-async function generateSauceMetadataUrlJob(saucingFee: number,
+async function generateSauceMetadataUrlJob(
+  saucingFee: number,
   mintPrice: number,
   fishIDs: string[],
   fishContent: string[],
-  bottleId: string) {
+  bottleId: string
+) {
+  console.timeLog();
   try {
-    await enqueueBackgroundJob(`${process.env.NEXT_PUBLIC_API_URL}/api/sauce/generate-sauce-metadata`, {
-      saucingFee, mintPrice, fishIDs, fishContent, bottleId
-    });
+    await enqueueBackgroundJob(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/sauce/generate-sauce-metadata`,
+      {
+        saucingFee,
+        mintPrice,
+        fishIDs,
+        fishContent,
+        bottleId,
+      }
+    );
   } catch (error) {
     //@ts-ignore
     throw new Error(`Failed to enqueue QStash job: ${error.message}`);
@@ -60,7 +68,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         0
       );
       const bottleID = uuid();
+      console.log('FISH DEETS', fishDeets);
       const fishContent = fishDeets.map((each: any) => each.metadata_url);
+      console.log('FISH CONTENT', fishContent);
 
       // const { metadataFileLocation: metadataUrl, sauceAwarded } =
       //   await generateSauceMetadataUrl(
@@ -71,19 +81,19 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       //     bottleID
       //   );
       // console.log('SAUCE META DATA URL GENERATED...', metadataUrl);
-      await generateSauceMetadataUrlJob(SAUCING_FEE,
+      await generateSauceMetadataUrlJob(
+        SAUCING_FEE,
         totalMintPrice,
         fishIds,
         fishContent,
-        bottleID);
+        bottleID
+      );
 
       return res.status(200).json({ success: true });
-
     } catch (error) {
       console.error('Error processing request:', error);
       return res.status(500).json({ error: 'Internal Server Error' });
     }
-
 
     //     const buyBackPrice =
     //       sauceAwarded.name === 'Gunk' ? 0 : (totalMintPrice * 1.2).toFixed(2);

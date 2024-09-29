@@ -23,6 +23,7 @@ const SelectFishToSauce = () => {
   const { ownedFishIds } = useFetchOwnersRevealedFish(address);
 
   const { selectedFishIds } = useSelectedFishIds();
+  console.log('SELECTED', selectedFishIds);
 
   const unselectedFish = ownedFishIds.filter(
     // @ts-ignore
