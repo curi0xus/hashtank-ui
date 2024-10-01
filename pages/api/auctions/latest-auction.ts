@@ -25,9 +25,10 @@ async function triggerCloseAuctionJob(previousAuctionId: string) {
 }
 
 async function createNewAuction(batchNumber: number) {
-  const NEW_AUCTION_NAME = 'Aquatic Versicolor';
+  const NEW_AUCTION_NAME = 'Alpha Charlie Echo';
   const NEW_AUCTION_DESCRIPTION =
-    "Amidst the slow but steady collapse of oceanic currents and marine life in the year 2048, each of our harvests yielded increasingly strange specimens. Organisms previously lacking vibrant pigmentation developed almost neon-like features, while those already boasting such beauty evolved even more peculiar properties, reminiscent of a cephalopod's mimicry. For our first public auction, we present some of the most colorful creatures ever to emerge from a dying world. They say the last dance is often the most passionate and enduring – will you be the patron of this final act?";
+    "The first oceanic harvest we have on display here is from the year 2044. The batch you see now was part of a research expedition commissioned by the United Nations in its final months. These marine life forms were the first to exhibit significant mutations surpassing anything previously observed in the ocean. The findings from these UN missions indicate a projected collapse in marine organisms and their habitats within the next few years, accompanied by widespread contamination of those that survive. World governments pressured the UN to withhold these findings from the public, and the collected specimens were stored under the codename ACE.\n Now, in the year 2048, as the wholesale collapse of sea life and disruption of oceanic currents become a reality, widespread famine and the reclamation of coastal settlements by the sea have thrown governments worldwide into disarray. Amidst this chaos, our contacts on the inside have managed to smuggle out these original specimens for your collecting pleasure.\n However, let's keep this a secret between us; we don't want any G-Men knocking on our doors.";
+
   const AUCTION_START_PRICE = '1.00';
   const BATCH_PREFIX = generateRandomString(2);
   // Create a new auction with the same details
