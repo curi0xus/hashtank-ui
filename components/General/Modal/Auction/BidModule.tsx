@@ -42,7 +42,6 @@ const BidSubmissionForm = ({
     refetch();
   }, [fishId]);
 
-
   return (
     <Flex gap='2%' flexDir={['column', 'row']} w='100%'>
       <NumberInput
@@ -102,6 +101,12 @@ const BidSubmissionForm = ({
           }
 
           try {
+            toast({
+              title: `Placing Bid...`,
+              status: 'loading',
+              duration: 3000,
+              isClosable: false,
+            });
             const accessToken = await getAccessToken();
             const instance = axiosInstance(accessToken!);
             const response = await instance.post(`/api/bids/submit-bid`, {
@@ -110,12 +115,12 @@ const BidSubmissionForm = ({
               address,
               auctionId,
             });
-          
+
             if (response.status === 200 || response.data.success) {
               refetch(); // Refetch fish data
               refetchUserBalance(); // Refetch user balance
               setBidAmount(undefined); // Reset bid amount
-          
+
               toast({
                 title: 'Bid Successful!',
                 status: 'success',
@@ -126,7 +131,8 @@ const BidSubmissionForm = ({
           } catch (error: any) {
             toast({
               title: 'Bid Error',
-              description: error?.response?.data?.error || 'Please enter a valid bid.',
+              description:
+                error?.response?.data?.error || 'Please enter a valid bid.',
               status: 'error',
               duration: 3000,
               isClosable: true,
