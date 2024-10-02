@@ -9,7 +9,16 @@ import { useRouter } from 'next/router';
 import HashtankTooltip from '../Tooltip';
 import BellImage from 'public/static/images/General/Tooltip/Bell.webp';
 import usePostUser from '@/new-hooks/users/usePostUsers';
-import WrongNetworkModal from '../Modal/Onboarding/WrongNetwork';
+
+function disableScroll() {
+  // Get the current page scroll position
+  let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  let scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+  // if any scroll is attempted, set this to the previous value
+  window.onscroll = function () {
+    window.scrollTo(scrollLeft, scrollTop);
+  };
+}
 
 const NavHeader = () => {
   const { login, ready, authenticated, user, logout, linkWallet } = usePrivy();
@@ -20,7 +29,6 @@ const NavHeader = () => {
   const { mutateAsync } = usePostUser();
 
   const isConnected = ready && authenticated && user;
-  const [isShowModal, setIsShowModal] = useState(false);
 
   useEffect(() => {
     async function init() {
@@ -39,21 +47,7 @@ const NavHeader = () => {
   //   }
   // }, [ready, authenticated, user, reconnect]);
 
-  function disableScroll() {
-    // Get the current page scroll position
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    let scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-    // if any scroll is attempted, set this to the previous value
-    window.onscroll = function () {
-      console.log('scroll', isShowModal);
-      setIsShowModal(true);
-      console.log('scroll 2', isShowModal);
-      window.scrollTo(scrollLeft, scrollTop);
-    };
-  }
-
   function enableScroll() {
-    setIsShowModal(false);
     window.onscroll = function () {
       if (!isHideLogo && window.scrollY > 0) {
         setIsHideLogo(true);
@@ -77,8 +71,6 @@ const NavHeader = () => {
     };
   }, [isConnected, pathname]);
 
-  console.log(isShowModal);
-
   return (
     <Flex
       zIndex={9}
@@ -100,7 +92,6 @@ const NavHeader = () => {
         </Box>
       </LinkOverlay>
       <Spacer />
-      {isShowModal && <WrongNetworkModal isShowModal={isShowModal} />}
       <Box p={['5', '5', '20', '20']}>
         {isConnected ? (
           <NavDrawer />
@@ -114,15 +105,15 @@ const NavHeader = () => {
             title='LOG IN TO START PLAYING'
             Instruction={() => (
               <>
-                Log in with your email to start engaging with the world of
-                HASHTANK.
+                Log in with your wallet or email to start engaging with the
+                world of HASHTANK.
               </>
             )}
             Trigger={() => (
               <Button
                 isDisabled={!ready}
                 // @ts-ignore
-                onClick={login}
+                onClick={isConnected ? reconnect : login}
                 maxW={'60vw'}
                 p={['10px 10px', '30px 50px']}
                 _hover={{
