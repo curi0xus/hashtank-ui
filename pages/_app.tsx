@@ -18,6 +18,7 @@ import { hashTankChain } from '../wagmi';
 const queryClient = new QueryClient();
 import { store } from '@/redux/store';
 import { Provider } from 'react-redux';
+import useInvitationCode from '@/hooks/useInvitationCode';
 
 // import { addRpcUrlOverrideToChain } from '@privy-io/react-auth';
 
@@ -104,6 +105,15 @@ const theme = extendTheme({
 });
 
 export default function App({ Component, pageProps, router }: AppProps) {
+  const inviteCode = router?.query?.inviteCode;
+  const codeStatus = useInvitationCode();
+
+  useEffect(() => {
+    if (inviteCode && typeof inviteCode === 'string') {
+      window.localStorage.setItem('invite_code', inviteCode);
+    }
+  }, [inviteCode]);
+
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   // useEffect(() => {
