@@ -1,4 +1,5 @@
 import { Box, Image, keyframes } from "@chakra-ui/react";
+import fish from "@/public/static/images/Home/Example_Fish3.webp";
 
 // Define keyframes for subtle wavy swimming animations
 const swimLeftToRight = keyframes`
@@ -45,11 +46,11 @@ const getRandomSwim = () => {
 
 const SwimmingFish = () => {
   const fishData = [
-    { src: "/static/images/home/Example_Fish3.webp", id: 1 },
-    { src: "/static/images/home/Example_Fish3.webp", id: 2 },
-    { src: "/static/images/home/Example_Fish3.webp", id: 3 },
-    { src: "/static/images/home/Example_Fish3.webp", id: 4 },
-    { src: "/static/images/home/Example_Fish3.webp", id: 5 },
+    { src: fish.src, id: 1 },
+    { src: fish.src, id: 2 },
+    { src: fish.src, id: 3 },
+    { src: fish.src, id: 4 },
+    { src: fish.src, id: 5 },
   ];
 
   return (
