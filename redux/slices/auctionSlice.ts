@@ -19,7 +19,7 @@ const initialState: AuctionState = {
 export const fetchLatestAuctionId = createAsyncThunk(
   'auction/fetchLatestAuctionId',
   async () => {
-    const response = await axios.get('/api/auctions/latest-auction');
+    const response = await axios.get('/api/auctions/latest-auction-id');
     console.log('auction latest id: ' + response.data.auction_id);
     return response.data.auction_id;
   }
