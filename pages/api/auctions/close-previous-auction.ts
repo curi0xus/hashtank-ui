@@ -1,5 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createSupabaseClient } from '@/util/supabase/server';
+import { privy } from '@/util/privy';
+import nodemailer from 'nodemailer';
 
 const supabase = createSupabaseClient();
 
@@ -67,7 +69,11 @@ async function closePreviousAuction(req: NextApiRequest, res: NextApiResponse) {
               console.error(`Error updating fish`, updateFishError);
               throw updateFishError;
             }
-
+            const user = await privy.getUserByWalletAddress(winner);
+            const userEmail = user?.email as string | undefined;
+            if (userEmail) {
+              await sendEmail(userEmail, fish.id, allFishBids[0].bid_amount, newFilePath);
+            }
             console.log('FISH AWARDED TO:', winner, newFilePath);
           }
         })
@@ -81,4 +87,36 @@ async function closePreviousAuction(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
+async function sendEmail(userEmail: string, fishId: string, winningBid: number, metadataUrl: string) {
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.EMAIL_USER,
+    to: userEmail,
+    subject: 'You have been awarded a Fish!',
+    text: `Congratulations! You have been awarded a fish with the following details:
+    
+    - Fish ID: ${fishId}
+    - Winning Bid: ${winningBid}
+    - Metadata URL: ${metadataUrl}
+
+    Thank you for participating!`,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent to:', userEmail);
+  } catch (emailError) {
+    console.error('Error sending email:', emailError);
+  }
+}
+
 export default closePreviousAuction;
+
+
