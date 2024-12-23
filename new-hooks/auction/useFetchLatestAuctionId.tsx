@@ -9,7 +9,7 @@ const useFetchLatestAuctionId = () => {
     queryFn: async (): Promise<any> => {
       const accessToken = await getAccessToken();
       const instance = axiosInstance(accessToken!);
-      const response = await instance.get('/api/auctions/latest-auction');
+      const response = await instance.get('/api/auctions/latest-auction-id');
       return response.data.auction_id;
     },
   });
